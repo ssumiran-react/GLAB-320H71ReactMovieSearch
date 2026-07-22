@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import './App.css'
 import Form from './components/Form'
 import MovieDisplay from './components/MovieDisplay'
@@ -6,24 +6,29 @@ import MovieDisplay from './components/MovieDisplay'
 
 function App() {
   const [count, setCount] = useState(0)
-
-  // Constant with your API Key
-  //const apiKey = vite_apiKey;
-
   // State to hold movie data
   const [movie, setMovie] = useState([]);
+  // Constant with your API Key
+  const APIKEY = import.meta.env.VITE_API_KEY
 
+  
+
+  
   // Function to get movies
   const getMovie = async(searchTerm) => {
     // Make fetch request and store the response
     const response = await fetch(
-      `http://www.omdbapi.com/?i=tt3896198&apikey=22a9a0da` 
-    );//&t=${searchTerm}`
+      `http://www.omdbapi.com/?i=tt3896198&apikey=${APIKEY}&t=${searchTerm}` 
+    );//
     // Parse JSON response into a JavaScript object
     const data = await response.json();
     // Set the Movie state to the received data
     setMovie(data);
   };
+
+// This will run on the first render but not on subsquent renders
+useEffect(() => {
+  }, []);
 
   return (
     <div className="App">
