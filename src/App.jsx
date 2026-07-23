@@ -10,24 +10,26 @@ function App() {
   const [movie, setMovie] = useState([]);
   // Constant with your API Key
   const APIKEY = import.meta.env.VITE_API_KEY
-
-  
-
   
   // Function to get movies
   const getMovie = async(searchTerm) => {
-    // Make fetch request and store the response
-    const response = await fetch(
-      `http://www.omdbapi.com/?i=tt3896198&apikey=${APIKEY}&t=${searchTerm}` 
-    );//
-    // Parse JSON response into a JavaScript object
-    const data = await response.json();
-    // Set the Movie state to the received data
-    setMovie(data);
+    try {
+      // Make fetch request and store the response
+      const response = await fetch(
+        `http://www.omdbapi.com/?i=tt3896198&apikey=${APIKEY}&t=${searchTerm}` 
+      );//
+      // Parse JSON response into a JavaScript object
+      const data = await response.json();
+      // Set the Movie state to the received data
+      setMovie(data);
+    } catch(e) {
+      console.error(e)
+    }
   };
 
-// This will run on the first render but not on subsquent renders
-useEffect(() => {
+  // This will run on the first render but not on subsquent renders
+  useEffect(() => {
+    getMovie("Clueless");
   }, []);
 
   return (
